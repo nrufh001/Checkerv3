@@ -1,6 +1,8 @@
 
 # import the modules
-import sys
+
+import cv2
+import numpy as np
 import time
 import logging
 from watchdog.observers import Observer
@@ -29,6 +31,10 @@ if __name__ == "__main__":
         while True:
             # Set the thread sleep time
             time.sleep(1)
+            img = cv2.imread('logging.src_path', 0)
+            equ = cv2.equalizeHist(img)
+            res = np.hstack((img, equ)) #stacking images side-by-side
+            cv2.imwrite('res.png', res)
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
